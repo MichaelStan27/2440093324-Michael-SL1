@@ -1,0 +1,96 @@
+*{
+    background-color: #c2f0f7;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+    color: black;
+}
+
+.title{
+    margin: 30px;
+    font-size: 30px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.row-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.input-container{
+    /* border: 2px solid black; */
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+label{
+    width: 130px;
+    /* border: 2px solid black; */
+    text-align: left;
+}
+
+input{
+    margin: 10px 100px 10px 10px;
+    text-align: left;
+    width: 200px;
+}
+
+textarea{
+    margin: 10px 100px 10px 10px;
+    text-align: left;
+    
+}
+
+.btn-container{
+    width: 75%;
+    margin: 20px;
+    /* border: 2px solid black; */
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    right: 0px;
+}
+
+.btn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    gap: 10px;
+}
+
+button{
+    background-color: #adf59f;
+    font-size: 20px;
+    width: 200px;
+    border: 2px solid black;
+    box-shadow: 2px 2px 3px black;
+    border-radius: 3px;
+}
+
+.btn > a {
+    background-color: #fdd7ac;
+    font-size: 20px;
+    text-decoration: none;
+    width: 200px;
+    border: 2px solid black;
+    box-shadow: 2px 2px 3px black;
+    border-radius: 3px;
+}
