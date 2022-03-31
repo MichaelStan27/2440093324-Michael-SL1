@@ -1,19 +1,18 @@
 <?php
+
+    require_once '../functions.php';
     session_start();
     // if(isset($_SESSION["uSession"])){
         if(isset($_POST["login"])){
-            if($_POST["username"]===$_SESSION["uSession"] &&
-                $_POST["password"]===$_SESSION["pSession"]){
+            if(login($_POST)){
                 $_SESSION["login"] = true;
                 echo "<script>
-                    alert('Login berhasil');
-                    document.location.href='../home/home.php';
+                alert('Login berhasil');
+                document.location.href='../home/home.php';
                 </script>";
             }
             else{
-                echo "<script>
-                    alert('Login gagal');
-                </script>";
+                printError();
             }
         }
     // }

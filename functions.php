@@ -167,6 +167,30 @@ function register($datas){
 //     }
 // }
 
+function login($datas){
+    global $conn;
+    global $errorMsg;
+
+    $username = $datas['username'];
+    $password = $datas['password'];
+
+    $errorMsg.= ($username==='')?'username must be filled ':'';
+    $errorMsg.= ($password==='')?'password must be filled':'';
+    if($errorMsg)return false;
+
+    $result = mysqli_query($conn,"SELECT * FROM user WHERE username = '$username'");
+    $data = mysqli_fetch_assoc($result);
+    if($data){
+        if(password_verify($password, $data['password'])){
+            return true;
+        }
+        $errorMsg.='password salah';
+        return false;
+    }
+    $errorMsg.='username invalid';
+    return false;
+}
+
 function deleteFile($file){
     $path = "../img/" . $file;
     unlink($path);
