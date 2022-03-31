@@ -1,13 +1,15 @@
 <?php
     session_start();
+    require_once "../functions.php";
     //kalo belum login tidak akan bisa masuk
     if(!isset($_SESSION["login"])){
         header('location: ../welcome/welcome.php');
         exit;
     }
-    $depan = $_SESSION["nama_depan"];
-    $tengah = $_SESSION["nama_tengah"];
-    $belakang = $_SESSION["nama_belakang"];
+    $data = getName();
+    $depan = $data['depan'];
+    $tengah = $data['tengah'];
+    $belakang = $data['belakang'];
 ?>
 
 <!DOCTYPE html>

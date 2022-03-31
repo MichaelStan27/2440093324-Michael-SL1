@@ -195,3 +195,16 @@ function deleteFile($file){
     $path = "../img/" . $file;
     unlink($path);
 }
+
+function getName(){
+    global $conn;
+    $username = $_SESSION['login'];
+    $result = mysqli_query($conn,"SELECT * FROM user WHERE username = '$username'");
+    $data = mysqli_fetch_assoc($result);
+    $arr = [];
+    $arr['depan'] = $data['nama_depan'];
+    $arr['tengah'] = $data['nama_tengah'];
+    $arr['belakang'] = $data['nama_belakang'];
+
+    return $arr;
+}

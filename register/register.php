@@ -1,18 +1,8 @@
 <?php
     require_once '../functions.php';
     session_start();
-    // if(isset($_SESSION['uSession'])){
-    //     echo"<script>
-    //             alert('Anda sudah mendaftarkan akun, silahkan login');
-    //             document.location.href='../welcome/welcome.php';
-    //          </script>";
-    // }
     if(isset($_POST["register"])){
         if(validate($_POST)){
-            //  $_SESSION["uSession"] = $_POST["username"];
-            //  $_SESSION["pSession"] = $_POST["password1"];
-            //  $_SESSION["nameFile"] = $_FILES["foto"]["name"];
-            //  saveToSession($_POST);
             if(register($_POST)){
                 echo"<script>
                 alert('Registrasi Berhasil');

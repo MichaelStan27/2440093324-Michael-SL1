@@ -1,11 +1,9 @@
 <?php
-
-    require_once '../functions.php';
     session_start();
-    // if(isset($_SESSION["uSession"])){
+    require_once '../functions.php';
         if(isset($_POST["login"])){
             if(login($_POST)){
-                $_SESSION["login"] = true;
+                $_SESSION["login"] = $_POST['username'];
                 echo "<script>
                 alert('Login berhasil');
                 document.location.href='../home/home.php';
@@ -15,13 +13,6 @@
                 printError();
             }
         }
-    // }
-    // else{
-    //     echo "<script>
-    //             alert('Akun tidak terdeteksi, silahkan registrasi lebih dulu');
-    //             document.location.href='../welcome/welcome.php';
-    //         </script>";
-    // }
 ?>
 
 
