@@ -25,18 +25,6 @@ function isEmpty($datas){
     return $emptyArr;
 }
 
-// function isValidDate($date){
-//     if(preg_match("/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$/",$date)){
-//         $arrNum = explode("-",$date);
-//         $day = $arrNum[0];
-//         $month = $arrNum[1];
-//         $year = $arrNum[2];
-
-//         return checkdate($month,$day,$year);
-//     }
-//     return false;
-// }
-
 function isValidEmail($email){
     return str_ends_with($email, "@gmail.com");
 }
@@ -88,9 +76,6 @@ function validate($datas){
 
     //check validasi data yang sudah diisi
     checkNumericData($datas);
-    // if(!isValidDate($datas["tgl_lahir"])){
-    //     $errorMsg.="(tanggal lahir tidak valid) ";
-    // }
     if(!isValidEmail($datas["email"])){
         $errorMsg.= "(email tidak diakhiri dengan @gmail.com) ";
     }
@@ -156,17 +141,6 @@ function register($datas){
     return mysqli_affected_rows($conn);
 }
 
-// function saveToSession($datas){
-//     $currentKey;
-//     $emptyArr=[];
-//     $keys = array_keys($datas);
-//     //-1 biar submit tidak dimasukkan
-//     for($i = 0; $i < count($datas)-1 ;$i++){
-//         $currentKey = $keys[$i];
-//         $_SESSION[$currentKey] = $datas[$currentKey];
-//     }
-// }
-
 function login($datas){
     global $conn;
     global $errorMsg;
@@ -189,11 +163,6 @@ function login($datas){
     }
     $errorMsg.='username invalid';
     return false;
-}
-
-function deleteFile($file){
-    $path = "../img/" . $file;
-    unlink($path);
 }
 
 function getName(){

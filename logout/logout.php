@@ -1,14 +1,11 @@
 <?php
-require_once '../functions.php';
-
 session_start();
+require_once '../functions.php';
 
 if(!isset($_SESSION["login"])){
     header('location: ../welcome/welcome.php');
     exit;
 }
-
-deleteFile($_SESSION["nameFile"]);
 
 session_destroy();
 echo "<script>
