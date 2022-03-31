@@ -1,9 +1,9 @@
 <?php
     session_start();
-    if(isset($_SESSION["uSession"])){
+    // if(isset($_SESSION["uSession"])){
         if(isset($_POST["login"])){
             if($_POST["username"]===$_SESSION["uSession"] &&
-            $_POST["password"]===$_SESSION["pSession"]){
+                $_POST["password"]===$_SESSION["pSession"]){
                 $_SESSION["login"] = true;
                 echo "<script>
                     alert('Login berhasil');
@@ -16,13 +16,13 @@
                 </script>";
             }
         }
-    }
-    else{
-        echo "<script>
-                alert('Akun tidak terdeteksi, silahkan registrasi lebih dulu');
-                document.location.href='../welcome/welcome.php';
-            </script>";
-    }
+    // }
+    // else{
+    //     echo "<script>
+    //             alert('Akun tidak terdeteksi, silahkan registrasi lebih dulu');
+    //             document.location.href='../welcome/welcome.php';
+    //         </script>";
+    // }
 ?>
 
 

@@ -1,4 +1,7 @@
 <?php
+
+$conn = mysqli_connect("localhost", "root", "", "sl_dbserver");
+
 $errorMsg = "";
 $namaFile;
 
@@ -22,17 +25,17 @@ function isEmpty($datas){
     return $emptyArr;
 }
 
-function isValidDate($date){
-    if(preg_match("/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$/",$date)){
-        $arrNum = explode("-",$date);
-        $day = $arrNum[0];
-        $month = $arrNum[1];
-        $year = $arrNum[2];
+// function isValidDate($date){
+//     if(preg_match("/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$/",$date)){
+//         $arrNum = explode("-",$date);
+//         $day = $arrNum[0];
+//         $month = $arrNum[1];
+//         $year = $arrNum[2];
 
-        return checkdate($month,$day,$year);
-    }
-    return false;
-}
+//         return checkdate($month,$day,$year);
+//     }
+//     return false;
+// }
 
 function isValidEmail($email){
     return str_ends_with($email, "@gmail.com");
@@ -85,9 +88,9 @@ function validate($datas){
 
     //check validasi data yang sudah diisi
     checkNumericData($datas);
-    if(!isValidDate($datas["tgl_lahir"])){
-        $errorMsg.="(tanggal lahir tidak valid) ";
-    }
+    // if(!isValidDate($datas["tgl_lahir"])){
+    //     $errorMsg.="(tanggal lahir tidak valid) ";
+    // }
     if(!isValidEmail($datas["email"])){
         $errorMsg.= "(email tidak diakhiri dengan @gmail.com) ";
     }
@@ -97,7 +100,6 @@ function validate($datas){
     //jika sudah benar semua, cek password
     if($errorMsg===""){
         if($datas["password1"]===$datas["password2"]){
-            uploadFile();
             return true;
         }
         $errorMsg.="password tidak sama";
@@ -110,16 +112,60 @@ function printError(){
     echo "<script> alert('$errorMsg') </script>";
 }
 
-function saveToSession($datas){
-    $currentKey;
-    $emptyArr=[];
-    $keys = array_keys($datas);
-    //-1 biar submit tidak dimasukkan
-    for($i = 0; $i < count($datas)-1 ;$i++){
-        $currentKey = $keys[$i];
-        $_SESSION[$currentKey] = $datas[$currentKey];
+function register($datas){
+    global $conn;
+    $depan = $datas['nama_depan'];
+    $tengah = $datas['nama_tengah'];
+    $belakang = $datas['nama_belakang'];
+    $tempat_lahir = $datas['tempat_lahir'];
+    $tgl_lahir = $datas['tgl_lahir'];
+    $nik = $datas['nik'];
+    $warga = $datas['warga_negara'];
+    $email = $datas['email'];
+    $hp = $datas['hp'];
+    $alamat = $datas['alamat'];
+    $kode_pos = $datas['kode_pos'];
+    $foto = $_FILES['foto']['name'];
+    $username = $datas['username'];
+    $password = $datas['password1'];
+
+    //check username
+    $result = mysqli_query($conn,"SELECT username FROM user WHERE username = '$username'");
+
+    if(mysqli_fetch_assoc($result)){
+        echo"
+            <script>
+                alert('username sudah diambil');
+            </script>
+        ";
+        return false;
     }
+
+    //enkripsi pass
+
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    $query = "INSERT INTO user
+                VALUES ('','$depan','$tengah','$belakang','$tempat_lahir','$tgl_lahir','$nik','$warga','$email'
+                ,'$hp', '$alamat', '$kode_pos', '$foto', '$username', '$password')";
+
+    mysqli_query($conn, $query);
+
+    uploadFile();
+
+    return mysqli_affected_rows($conn);
 }
+
+// function saveToSession($datas){
+//     $currentKey;
+//     $emptyArr=[];
+//     $keys = array_keys($datas);
+//     //-1 biar submit tidak dimasukkan
+//     for($i = 0; $i < count($datas)-1 ;$i++){
+//         $currentKey = $keys[$i];
+//         $_SESSION[$currentKey] = $datas[$currentKey];
+//     }
+// }
 
 function deleteFile($file){
     $path = "../img/" . $file;

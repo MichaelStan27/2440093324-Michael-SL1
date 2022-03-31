@@ -1,22 +1,24 @@
 <?php
     require_once '../functions.php';
     session_start();
-    if(isset($_SESSION['uSession'])){
-        echo"<script>
-                alert('Anda sudah mendaftarkan akun, silahkan login');
-                document.location.href='../welcome/welcome.php';
-             </script>";
-    }
+    // if(isset($_SESSION['uSession'])){
+    //     echo"<script>
+    //             alert('Anda sudah mendaftarkan akun, silahkan login');
+    //             document.location.href='../welcome/welcome.php';
+    //          </script>";
+    // }
     if(isset($_POST["register"])){
         if(validate($_POST)){
-             $_SESSION["uSession"] = $_POST["username"];
-             $_SESSION["pSession"] = $_POST["password1"];
-             $_SESSION["nameFile"] = $_FILES["foto"]["name"];
-             saveToSession($_POST);
-             echo"<script>
+            //  $_SESSION["uSession"] = $_POST["username"];
+            //  $_SESSION["pSession"] = $_POST["password1"];
+            //  $_SESSION["nameFile"] = $_FILES["foto"]["name"];
+            //  saveToSession($_POST);
+            if(register($_POST)){
+                echo"<script>
                 alert('Registrasi Berhasil');
                 document.location.href='../welcome/welcome.php';
-             </script>";
+                </script>";
+            }
         }
         else{
             printError();
@@ -62,7 +64,7 @@
                 </div>
                 <div class="input-container">
                     <label for="tgl_lahir">Tgl Lahir</label>
-                    <input type="text" name="tgl_lahir" id="tgl_lahir"  value="dd-mm-yyyy">
+                    <input type="date" name="tgl_lahir" id="tgl_lahir"  value="dd-mm-yyyy">
                 </div>
                 <div class="input-container">
                     <label for="nik">NIK</label>
