@@ -97,6 +97,11 @@ function printError(){
     echo "<script> alert('$errorMsg') </script>";
 }
 
+function deleteFile($file){
+    $path = "../img/" . $file;
+    unlink($path);
+}
+
 function register($datas){
     global $conn;
     $depan = $datas['nama_depan'];
@@ -176,4 +181,74 @@ function getName(){
     $arr['belakang'] = $data['nama_belakang'];
 
     return $arr;
+}
+
+function getAll(){
+    global $conn;
+    $username = $_SESSION['login'];
+    $arr = [];
+    $result = mysqli_query($conn,"SELECT * FROM user WHERE username = '$username'");
+    while($data = mysqli_fetch_assoc($result)){
+        $arr[] = $data;
+    }
+
+    return $arr;
+}
+
+function update($datas){
+    global $conn;
+    $username = $_SESSION['login'];
+    $depan = $datas['nama_depan'];
+    $tengah = $datas['nama_tengah'];
+    $belakang = $datas['nama_belakang'];
+    $tempat_lahir = $datas['tempat_lahir'];
+    $tgl_lahir = $datas['tgl_lahir'];
+    $nik = $datas['nik'];
+    $warga = $datas['warga_negara'];
+    $email = $datas['email'];
+    $hp = $datas['hp'];
+    $alamat = $datas['alamat'];
+    $kode_pos = $datas['kode_pos'];
+    $foto = $_FILES['foto']['name'];
+    $fotolama = $datas['fotolama'];
+
+    $query='';
+
+    if($foto==$fotolama){
+        $query = "UPDATE user 
+                SET nama_depan = '$depan',
+                nama_tengah = '$tengah',
+                nama_belakang = '$belakang',
+                tempat_lahir = '$tempat_lahir',
+                tgl_lahir = '$tgl_lahir',
+                nik = '$nik',
+                warga_negara = '$warga',
+                email = '$email',
+                hp = '$hp',
+                alamat = '$alamat',
+                kode_pos = '$kode_pos'
+                WHERE username = '$username'
+                ";
+    }
+    else{
+        $query = "UPDATE user 
+                SET nama_depan = '$depan',
+                nama_tengah = '$tengah',
+                nama_belakang = '$belakang',
+                tempat_lahir = '$tempat_lahir',
+                tgl_lahir = '$tgl_lahir',
+                nik = '$nik',
+                warga_negara = '$warga',
+                email = '$email',
+                hp = '$hp',
+                alamat = '$alamat',
+                kode_pos = '$kode_pos',
+                foto = '$foto'
+                WHERE username = '$username'
+                ";
+        deleteFile($fotolama);
+        uploadFile();
+    }
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
 }
